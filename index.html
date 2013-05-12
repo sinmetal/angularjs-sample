@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app>
+  <head>
+    <meta charset="utf-8">
+    <title>AngularJS sample</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]--><!-- Le styles -->
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-responsive.min.css">
+  </head>
+  <body>
+    <div ng-controller="MainController" ng-init="init()">
+  	  <h2>Hello AngularJS !!</h2>
+      <form ng-submit="submit()">
+        <select ng-model="entryForm.categoryid" ng-options="c.id as c.name for c in categories" ng-change="changeCategory()">
+          <option value="">-- chose category --</option>
+        </select>
+        <br />
+        <select ng-model="entryForm.itemid" ng-options="i.id as i.name for i in items">
+          <option value="">-- chose item --</option>
+        </select>
+        <br />
+        <input type="text" ng-model="entryForm.name"></input>
+        <br />
+        <button type="submit" class="btn">submit</button>
+      </form>
+    </div>
+    <script src="//code.angularjs.org/1.0.6/angular.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>
