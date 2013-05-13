@@ -1,24 +1,20 @@
 var app = angular.module("sample", ["ngResource"]);
-app.factory("List", function($resource){
-  return $resource("/item/list");
-});
-app.factory("Entry", function($resource){
-  return $resource("/store/entry");
-});
-app.controller("MainController", function($scope, $resource, List, Entry){
+app.controller("MainController", function($scope, $resource){
   $scope.categories = [{"id" : "1", "name" : "野菜"}];
+  var List = $resource("/item/list");
+  var Entry = $resource("/store/entry");
   $scope.changeCategory = function() {
-    List.query({id : $scope.entryForm.categoryid}, function(data){
-      $scope.items = data;
+    $scope.items = List.query({id : $scope.entryForm.categoryid}, function(){
+      console.log("success list");
     }, function(){
-      console.log("error");
+      console.log("error list");
     });
   };
-  $scope.submit = function() {
+  $scope.submit = function($event) {
     Entry.save($scope.entryForm, function(){
-      console.log("success");
+      console.log("success entry");
     }, function(){
-      console.log("error");
+      console.log("error entry");
     });
   };
 });
