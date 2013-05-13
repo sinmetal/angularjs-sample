@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" ng-app>
+<html lang="ja" ng-app="sample">
   <head>
     <meta charset="utf-8">
     <title>AngularJS sample</title>
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-responsive.min.css">
   </head>
   <body>
-    <div ng-controller="MainController" ng-init="init()">
+    <div ng-controller="MainController">
   	  <h2>Hello AngularJS !!</h2>
       <form ng-submit="submit()">
         <select ng-model="entryForm.categoryid" ng-options="c.id as c.name for c in categories" ng-change="changeCategory()">
@@ -30,6 +30,7 @@
       </form>
     </div>
     <script src="//code.angularjs.org/1.0.6/angular.min.js"></script>
+    <script src="//code.angularjs.org/1.0.6/angular-resource.min.js"></script>
     <script src="/js/main.js"></script>
   </body>
 </html>

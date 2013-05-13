@@ -1,33 +1,24 @@
-function MainController($scope, $http) {
-	$scope.init = function() {
-		$scope.categories = [{"id" : "1", "name" : "野菜"}];
-	};
-
-	$scope.changeCategory = function() {
-		$http({
-			method: 'GET', 
-			url: '/item/list',
-			param: $scope.categoryid
-		}).
-  		success(function(data, status, headers, config) {
-  			$scope.items = data;
-  		}).
-		error(function(data, status, headers, config) {
-			console.log('error');
-		});
-	};
-
-	$scope.submit = function() {
-		$http({
-			method: 'POST', 
-			url: '/store/entry',
-			param: $scope.entryForm
-		}).
-  		success(function(data, status, headers, config) {
-  			console.log('success');
-  		}).
-		error(function(data, status, headers, config) {
-			console.log('error');
-		});
-	};
-}
+var app = angular.module("sample", ["ngResource"]);
+app.factory("List", function($resource){
+  return $resource("/item/list");
+});
+app.factory("Entry", function($resource){
+  return $resource("/store/entry");
+});
+app.controller("MainController", function($scope, $resource, List, Entry){
+  $scope.categories = [{"id" : "1", "name" : "野菜"}];
+  $scope.changeCategory = function() {
+    List.query({id : $scope.entryForm.categoryid}, function(data){
+      $scope.items = data;
+    }, function(){
+      console.log("error");
+    });
+  };
+  $scope.submit = function() {
+    Entry.save($scope.entryForm, function(){
+      console.log("success");
+    }, function(){
+      console.log("error");
+    });
+  };
+});
