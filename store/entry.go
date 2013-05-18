@@ -3,13 +3,15 @@ package store
 import (
 	"appengine"
 	"appengine/datastore"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 )
 
 func init() {
-	http.HandleFunc("/store/entry", handler)
+	http.HandleFunc("/store", handler)
 }
 
 type Test struct {
@@ -31,15 +33,25 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func post(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 
+	body, _ := ioutil.ReadAll(r.Body)
+	log.Printf("body=%s", body)
+
+	u := map[string]interface{}{}
+	err := json.Unmarshal(body, &u)
+	if err != nil {
+		panic(err)
+	}
+	log.Printf("categoryid=%s", u["categoryid"])
+	log.Printf("itemid=%s", u["itemid"])
+	log.Printf("name=%s", u["name"])
+
 	key := datastore.NewKey(c, "Test", "", 1, nil)
 	var t Test
+	t.Name = r.FormValue("name")
 	if _, err := datastore.Put(c, key, &t); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	log.Printf("categoryid=%s", r.FormValue("categoryid"))
-	log.Printf("itemid=%s", r.FormValue("itemid"))
-	log.Printf("name=%s", r.FormValue("name"))
 	fmt.Fprintf(w, "OK")
 }
