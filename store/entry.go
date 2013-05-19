@@ -15,8 +15,8 @@ func init() {
 }
 
 type Test struct {
-	CategoryId int
-	ItemId     int
+	CategoryId int `json:",string"`
+	ItemId     int `json:",string"`
 	Name       string
 }
 
@@ -47,15 +47,17 @@ func post(w http.ResponseWriter, r *http.Request) {
 	log.Printf("itemid=%s", u["itemid"])
 	log.Printf("name=%s", u["name"])
 
-	decoder := json.NewDecoder(r.Body)
-	var test *Test
-	if err = decoder.Decode(&test); err != nil {
-		c.Errorf("Error decoding Test: %s", err)
+	var t Test
+	if err = json.Unmarshal(body, &t); err != nil {
+		c.Errorf("Error unmarshal Test: %s", err)
 		return
 	}
+	c.Infof("CategoryId=%s", t.CategoryId)
+	c.Infof("ItemId=%s", t.ItemId)
+	c.Infof("Name=%s", t.Name)
 
 	key := datastore.NewKey(c, "Test", "", 1, nil)
-	if _, err := datastore.Put(c, key, &test); err != nil {
+	if _, err := datastore.Put(c, key, &t); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
