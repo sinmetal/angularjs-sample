@@ -44,7 +44,8 @@ func post(w http.ResponseWriter, r *http.Request) {
 	c.Infof("ItemId=%s", t.ItemId)
 	c.Infof("Name=%s", t.Name)
 
-	key := datastore.NewKey(c, "Test", "", 1, nil)
+	name := fmt.Sprintf("%d-_-%d-_-%s", t.CategoryId, t.ItemId, t.Name)
+	key := datastore.NewKey(c, "Test", name, 0, nil)
 	if _, err := datastore.Put(c, key, &t); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
