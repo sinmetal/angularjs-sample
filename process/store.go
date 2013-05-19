@@ -3,8 +3,10 @@ package store
 import (
 	"appengine"
 	"appengine/datastore"
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 )
@@ -13,7 +15,7 @@ func init() {
 	http.HandleFunc("/store", handler)
 }
 
-type Test struct {
+type Store struct {
 	CategoryId int `json:",string"`
 	ItemId     int `json:",string"`
 	Name       string
@@ -23,6 +25,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "POST":
 		post(w, r)
+	case "GET":
+		get(w, r)
 	default:
 		w.WriteHeader(http.StatusNotFound)
 		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
@@ -34,21 +38,42 @@ func post(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 
 	body, _ := ioutil.ReadAll(r.Body)
-	var t Test
-	if err := json.Unmarshal(body, &t); err != nil {
-		c.Errorf("Error unmarshal Test: %s", err)
+	var s Store
+	if err := json.Unmarshal(body, &s); err != nil {
+		c.Errorf("Error unmarshal Store: %s", err)
 		return
 	}
-	c.Infof("CategoryId=%s", t.CategoryId)
-	c.Infof("ItemId=%s", t.ItemId)
-	c.Infof("Name=%s", t.Name)
+	c.Infof("CategoryId=%s", s.CategoryId)
+	c.Infof("ItemId=%s", s.ItemId)
+	c.Infof("Name=%s", s.Name)
 
-	name := fmt.Sprintf("%d-_-%d-_-%s", t.CategoryId, t.ItemId, t.Name)
-	key := datastore.NewKey(c, "Test", name, 0, nil)
-	if _, err := datastore.Put(c, key, &t); err != nil {
+	name := fmt.Sprintf("%d-_-%d-_-%s", s.CategoryId, s.ItemId, s.Name)
+	key := datastore.NewKey(c, "Store", name, 0, nil)
+	if _, err := datastore.Put(c, key, &s); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	fmt.Fprintf(w, "OK")
+}
+
+func get(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+
+	q := datastore.NewQuery("Store")
+	b := bytes.NewBuffer(nil)
+	for t := q.Run(c); ; {
+		var s Store
+		key, err := t.Next(&s)
+		if err == datastore.Done {
+			break
+		}
+		if err != nil {
+			c.Errorf("error %s", err)
+			return
+		}
+		fmt.Fprintf(b, "Key=%vName=%s", key, s.Name)
+	}
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	io.Copy(w, b)
 }
