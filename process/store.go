@@ -20,15 +20,14 @@ type Test struct {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "POST" {
+	switch r.Method {
+	case "POST":
 		post(w, r)
+	default:
+		w.WriteHeader(http.StatusNotFound)
+		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+		fmt.Fprintf(w, "Not Found")
 	}
-
-	w.WriteHeader(http.StatusNotFound)
-	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	fmt.Fprintf(w, "Not Found")
-	return
-
 }
 
 func post(w http.ResponseWriter, r *http.Request) {
