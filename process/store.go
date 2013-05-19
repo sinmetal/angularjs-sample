@@ -59,8 +59,16 @@ func post(w http.ResponseWriter, r *http.Request) {
 
 func get(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
+	c.Infof("store get")
+
+	var stores []*Store
 
 	q := datastore.NewQuery("Store")
+	keys, _ := q.GetAll(c, &stores)
+	for i, _ := range keys {
+		c.Infof("%v", stores[i].Name)
+	}
+
 	b := bytes.NewBuffer(nil)
 	for t := q.Run(c); ; {
 		var s Store
