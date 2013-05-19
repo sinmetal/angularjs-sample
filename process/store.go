@@ -3,10 +3,8 @@ package store
 import (
 	"appengine"
 	"appengine/datastore"
-	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"net/http"
 )
@@ -59,29 +57,23 @@ func post(w http.ResponseWriter, r *http.Request) {
 
 func get(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
-	c.Infof("store get")
 
 	var stores []*Store
 
 	q := datastore.NewQuery("Store")
-	keys, _ := q.GetAll(c, &stores)
-	for i, _ := range keys {
-		c.Infof("%v", stores[i].Name)
+	_, err := q.GetAll(c, &stores)
+	if err != nil {
+		c.Errorf("query error : %v", err)
+		return
 	}
 
-	b := bytes.NewBuffer(nil)
-	for t := q.Run(c); ; {
-		var s Store
-		key, err := t.Next(&s)
-		if err == datastore.Done {
-			break
-		}
-		if err != nil {
-			c.Errorf("error %s", err)
-			return
-		}
-		fmt.Fprintf(b, "Key=%vName=%s", key, s.Name)
+	j, err := json.Marshal(stores)
+	if err != nil {
+		c.Errorf("json marshal error : %v", err)
+		return
 	}
-	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	io.Copy(w, b)
+
+	c.Infof("%s", j)
+	//fmt.Fprintf(w, "%s", j)
+	fmt.Fprintf(w, "%s", "[{\"id\" : \"1\", \"name\" : \"キャベツ\"}]")
 }
