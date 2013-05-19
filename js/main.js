@@ -15,7 +15,7 @@
     });
   }
 
-  function EntryController($scope, $resource){
+  function EntryController($scope, $location, $resource){
     $scope.categories = [{"id" : "1", "name" : "野菜"}];
     var List = $resource("/item/list");
     var Store = $resource("/store");
@@ -32,6 +32,7 @@
       console.log($scope.entryForm);
       Store.save($scope.entryForm, function(){
         console.log("success entry");
+        $location.path('/');
       }, function(){
         console.log("error entry");
       });
