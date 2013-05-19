@@ -16,11 +16,11 @@
     <div ng-controller="MainController">
   	  <h2>Hello AngularJS !!</h2>
       <form ng-submit="submit()">
-        <select ng-model="entryForm.categoryid" ng-options="c.id as c.name for c in categories" ng-change="changeCategory()">
+        <select ng-model="entryForm.categoryId" ng-options="c.id as c.name for c in categories" ng-change="changeCategory()">
           <option value="">-- chose category --</option>
         </select>
         <br />
-        <select ng-model="entryForm.itemid" ng-options="i.id as i.name for i in items">
+        <select ng-model="entryForm.itemId" ng-options="i.id as i.name for i in items">
           <option value="">-- chose item --</option>
         </select>
         <br />
@@ -29,6 +29,7 @@
         <button type="submit" class="btn">submit</button>
       </form>
     </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="//code.angularjs.org/1.0.6/angular.min.js"></script>
     <script src="//code.angularjs.org/1.0.6/angular-resource.min.js"></script>
     <script src="/js/main.js"></script>
