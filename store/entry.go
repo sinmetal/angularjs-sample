@@ -15,7 +15,9 @@ func init() {
 }
 
 type Test struct {
-	Name string
+	CategoryId int
+	ItemId     int
+	Name       string
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -45,10 +47,15 @@ func post(w http.ResponseWriter, r *http.Request) {
 	log.Printf("itemid=%s", u["itemid"])
 	log.Printf("name=%s", u["name"])
 
+	decoder := json.NewDecoder(r.Body)
+	var test *Test
+	if err = decoder.Decode(&test); err != nil {
+		c.Errorf("Error decoding Test: %s", err)
+		return
+	}
+
 	key := datastore.NewKey(c, "Test", "", 1, nil)
-	var t Test
-	t.Name = r.FormValue("name")
-	if _, err := datastore.Put(c, key, &t); err != nil {
+	if _, err := datastore.Put(c, key, &test); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
