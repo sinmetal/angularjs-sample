@@ -2,21 +2,20 @@
   var app = angular.module('sample', ['ngResource']).
     config(function($routeProvider) {
       $routeProvider.
-        when('/', {controller:ListController, templateUrl:'list.html'});
+        when('/', {controller:ListController, templateUrl:'list.html'}).
+        when('/entry', {controller:EntryController, templateUrl:'entry.html'});
     });
 
   function ListController($scope, $resource) {
     var Store = $resource("/store");
     $scope.stores = Store.query(function() {
       console.log("success store query");
-      console.log($scope.stores);
-      console.log($scope.stores[0].CategoryId);
     }, function(){
       console.log("error store query");
     });
   }
 
-  app.controller("MainController", function($scope, $resource){
+  function EntryController($scope, $resource){
     $scope.categories = [{"id" : "1", "name" : "野菜"}];
     var List = $resource("/item/list");
     var Store = $resource("/store");
@@ -37,5 +36,5 @@
         console.log("error entry");
       });
     };
-  });
+  }
 })();

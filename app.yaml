@@ -12,6 +12,10 @@ handlers:
   static_files: list.html
   upload: list.html
 
+- url: /entry.html
+  static_files: entry.html
+  upload: entry.html
+
 - url: /lib
   static_dir: lib
 
