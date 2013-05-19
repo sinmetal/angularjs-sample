@@ -7,10 +7,11 @@
 
     $scope.stores = Store.query(function() {
       console.log("success store query");
+      console.log($scope.stores);
+      console.log($scope.stores[0].CategoryId);
     }, function(){
       console.log("error store query");
     });
-    console.log($scope.stores);
 
     $scope.changeCategory = function() {
       $scope.items = List.query({id : $scope.entryForm.categoryid}, function(){

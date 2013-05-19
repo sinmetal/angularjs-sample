@@ -74,6 +74,5 @@ func get(w http.ResponseWriter, r *http.Request) {
 	}
 
 	c.Infof("%s", j)
-	//fmt.Fprintf(w, "%s", j)
-	fmt.Fprintf(w, "%s", "[{\"id\" : \"1\", \"name\" : \"キャベツ\"}]")
+	fmt.Fprintf(w, "%s", j)
 }
