@@ -15,26 +15,7 @@
   <body>
     <div ng-controller="MainController">
   	  <h2>Hello AngularJS !!</h2>
-      <div>
-        <table class="table">
-          <thead>
-            <tr>
-              <td>No</td>
-              <td>CategoryId</td>
-              <td>ItemId</td>
-              <td>Name</td>
-            </tr>
-          </thead>
-          <tbody ng-repeat="s in stores">
-            <tr>
-              <td>{{$index}}</td>
-              <td>{{s.CategoryId}}</td>
-              <td>{{s.ItemId}}</td>
-              <td>{{s.Name}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div ng-view></div>
       <div>
         <form ng-submit="submit()">
           <select ng-model="entryForm.categoryId" ng-options="c.id as c.name for c in categories" ng-change="changeCategory()">

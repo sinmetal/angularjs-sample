@@ -8,6 +8,10 @@ handlers:
   static_files: index.html
   upload: index.html
 
+- url: /list.html
+  static_files: list.html
+  upload: list.html
+
 - url: /lib
   static_dir: lib
 

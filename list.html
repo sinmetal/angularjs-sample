@@ -1,0 +1,20 @@
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <td>No</td>
+        <td>CategoryId</td>
+        <td>ItemId</td>
+        <td>Name</td>
+      </tr>
+    </thead>
+    <tbody ng-repeat="s in stores">
+      <tr>
+        <td>{{$index}}</td>
+        <td>{{s.CategoryId}}</td>
+        <td>{{s.ItemId}}</td>
+        <td>{{s.Name}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
