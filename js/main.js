@@ -1,10 +1,36 @@
 (function() {
+  /**
+   * 上部ナビゲーション設定
+   * 
+   * @param app angular module
+   */
+  var setNaviTopDirective = function(app) {
+    app.directive('navitop', function() {
+      var directiveDefinitionObject = {
+        priority: 0,
+        templateUrl: '/topmenu.html',
+        replace: false,
+        transclude: false,
+        restrict: 'E',
+        scope: false,
+        controller: ['$scope', '$location', function($scope, $location) {
+          // var urlFragments = $location.absUrl().split('/');
+          // var menuCategoryPathPosition = 1;
+          // $scope.current = urlFragments[menuCategoryPathPosition];
+        }]
+      };
+      return directiveDefinitionObject
+    });
+  };
+
   var app = angular.module('sample', ['ngResource']).
     config(function($routeProvider) {
       $routeProvider.
         when('/', {controller:'ListController', templateUrl:'list.html'}).
         when('/entry', {controller:'EntryController', templateUrl:'entry.html'});
     });
+
+  setNaviTopDirective(app);
 
   app.controller('ListController', ['$scope', '$resource', function($scope, $resource) {
     var Store = $resource("/store");
