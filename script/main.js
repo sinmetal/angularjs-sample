@@ -8,7 +8,7 @@
     app.directive('navitop', function() {
       var directiveDefinitionObject = {
         priority: 0,
-        templateUrl: '/topmenu.html',
+        templateUrl: '/html/common/topmenu.html',
         replace: false,
         transclude: false,
         restrict: 'E',
@@ -26,8 +26,8 @@
   var app = angular.module('sample', ['ngResource']).
     config(function($routeProvider) {
       $routeProvider.
-        when('/', {controller:'ListController', templateUrl:'list.html'}).
-        when('/entry', {controller:'EntryController', templateUrl:'entry.html'});
+        when('/', {controller:'ListController', templateUrl:'/html/item/list.html'}).
+        when('/entry', {controller:'EntryController', templateUrl:'/html/item/entry.html'});
     });
 
   setNaviTopDirective(app);

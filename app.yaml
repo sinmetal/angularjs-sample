@@ -8,23 +8,17 @@ handlers:
   static_files: index.html
   upload: index.html
 
-- url: /list.html
-  static_files: list.html
-  upload: list.html
-
-- url: /entry.html
-  static_files: entry.html
-  upload: entry.html
-
-- url: /topmenu.html
-  static_files: topmenu.html
-  upload: topmenu.html
-
 - url: /lib
   static_dir: lib
 
-- url: /js
-  static_dir: js
+- url: /html
+  static_dir: html
+
+- url: /script
+  static_dir: script
+
+- url: /style
+  static_dir: style
 
 - url: /.*
   script: _go_app
