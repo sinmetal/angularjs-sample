@@ -16,6 +16,10 @@ handlers:
   static_files: entry.html
   upload: entry.html
 
+- url: /topmenu.html
+  static_files: topmenu.html
+  upload: topmenu.html
+
 - url: /lib
   static_dir: lib
 
