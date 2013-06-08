@@ -14,9 +14,10 @@
         restrict: 'E',
         scope: false,
         controller: ['$scope', '$location', function($scope, $location) {
-          // var urlFragments = $location.absUrl().split('/');
-          // var menuCategoryPathPosition = 1;
-          // $scope.current = urlFragments[menuCategoryPathPosition];
+          var urlFragments = $location.absUrl().split('/');
+          // TODO ここでtop menu のactiveを判断する要素を作成する
+          console.log(urlFragments);
+          $scope.current = urlFragments[5];
         }]
       };
       return directiveDefinitionObject
@@ -26,11 +27,14 @@
   var app = angular.module('sample', ['ngResource']).
     config(function($routeProvider) {
       $routeProvider.
-        when('/', {controller:'ListController', templateUrl:'/html/item/list.html'}).
+        when('/', {controller:'TopController', templateUrl:'/html/top/top.html'}).
         when('/entry', {controller:'EntryController', templateUrl:'/html/item/entry.html'});
     });
 
   setNaviTopDirective(app);
+
+  app.controller('TopController', ['$scope', '$resource', function($scope, $resource) {
+  }]);
 
   app.controller('ListController', ['$scope', '$resource', function($scope, $resource) {
     var Store = $resource("/store");
