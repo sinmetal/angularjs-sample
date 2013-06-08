@@ -28,7 +28,8 @@
     config(function($routeProvider) {
       $routeProvider.
         when('/', {controller:'TopController', templateUrl:'/html/top/top.html'}).
-        when('/entry', {controller:'EntryController', templateUrl:'/html/item/entry.html'});
+        when('/guestbook/', {controller:'GuestBookListController', templateUrl:'/html/guestbook/list.html'}).
+        when('/guestbook/entry', {controller:'GuestBookEntryController', templateUrl:'/html/guestbook/entry.html'});
     });
 
   setNaviTopDirective(app);
@@ -36,7 +37,7 @@
   app.controller('TopController', ['$scope', '$resource', function($scope, $resource) {
   }]);
 
-  app.controller('ListController', ['$scope', '$resource', function($scope, $resource) {
+  app.controller('GuestBookListController', ['$scope', '$resource', function($scope, $resource) {
     var Store = $resource("/store");
     $scope.stores = Store.query(function() {
       console.log("success store query");
@@ -45,7 +46,7 @@
     });
   }]);
 
-  app.controller('EntryController', ['$scope', '$location', '$resource', function($scope, $location, $resource) {
+  app.controller('GuestBookEntryController', ['$scope', '$location', '$resource', function($scope, $location, $resource) {
     $scope.categories = [{"id" : "1", "name" : "野菜"}];
     var List = $resource("/item/list");
     var Store = $resource("/store");
@@ -62,7 +63,7 @@
       console.log($scope.entryForm);
       Store.save($scope.entryForm, function(){
         console.log("success entry");
-        $location.path('/');
+        $location.path('/#/guestbook/');
       }, function(){
         console.log("error entry");
       });
