@@ -47,9 +47,9 @@
   }]);
 
   app.controller('GuestBookEntryController', ['$scope', '$location', '$resource', function($scope, $location, $resource) {
-    $scope.elementTypes = [{"id" : "1", "name" : "ほのお"},
-                           {"id" : "2", "name" : "みず"},
-                           {"id" : "3", "name" : "くさ"}];
+    $scope.elementTypes = [{"id" : "1", "name" : "くさ"},
+                           {"id" : "2", "name" : "ほのお"},
+                           {"id" : "3", "name" : "みず"}];
     var Pokemon = $resource("/pokemon");
     var Store = $resource("/store");
 

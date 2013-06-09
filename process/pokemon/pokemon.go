@@ -45,9 +45,12 @@ func handlePokemons(r *http.Request) (interface{}, error) {
 func getPokemons(id int64) ([3]Pokemon, error) {
 	pokemons := [3]Pokemon{}
 
-	charmander := Pokemon{Id: 1, Name: "フシギダネ"}
-	pokemons[0] = charmander
-	pokemons[1] = charmander
+	bulbasaur := Pokemon{Id: 1, Name: "フシギダネ"}
+	squirtle := Pokemon{Id: 2, Name: "ゼニガメ"}
+	charmander := Pokemon{Id: 3, Name: "ヒトカゲ"}
+
+	pokemons[0] = bulbasaur
+	pokemons[1] = squirtle
 	pokemons[2] = charmander
 	return pokemons, nil
 }
