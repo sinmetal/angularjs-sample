@@ -54,9 +54,9 @@
     var Store = $resource("/store");
 
     $scope.changeElementType = function() {
+      console.log($scope.entryForm.elementTypeId);
       $scope.pokemons = Pokemon.query({id : $scope.entryForm.elementTypeId}, function(){
         console.log("success list");
-        console.log($scope.pokemons);
       }, function(){
         console.log("error list");
       });
