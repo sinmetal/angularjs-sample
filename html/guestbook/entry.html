@@ -1,0 +1,18 @@
+<div>
+  <h4>好きなポケモンをおしえて</h4>
+  <form name="form" ng-submit="submit()">
+    <select ng-model="entryForm.elementTypeId" ng-options="c.id as c.name for c in elementTypes" ng-change="changeElementType()">
+      <option value="">-- chose element type --</option>
+    </select>
+    <br />
+    <select ng-model="entryForm.pokemonId" ng-options="p.id as p.name for p in pokemons">
+      <option value="">-- chose pokemon --</option>
+    </select>
+    <br />
+    <input type="text" ng-model="entryForm.name"></input>
+    <br />
+    <input type="email" ng-model="entryForm.email"></input>
+    <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Save</button>
+    <a href="#/guestbook/" class="btn">Cancel</a>
+  </form>
+</div>
