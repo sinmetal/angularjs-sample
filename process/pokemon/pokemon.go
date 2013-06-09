@@ -10,8 +10,8 @@ import (
 )
 
 type Pokemon struct {
-	Id int64 `json: "id"`
-	Name string `json: "name"`
+	Id int64 `json:"id"`
+	Name string `json:"name"`
 }
 
 func init() {
@@ -24,9 +24,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if err == nil {
 		log.Printf("val=%s", val)
 		err = json.NewEncoder(w).Encode(val)
-		if err != nil {
-			c.Errorf("%s", err)
-		}
 	}
 	if err != nil {
 		c.Errorf("pokemon error: %#v", err)
