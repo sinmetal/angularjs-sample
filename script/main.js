@@ -47,16 +47,20 @@
   }]);
 
   app.controller('GuestBookEntryController', ['$scope', '$location', '$resource', function($scope, $location, $resource) {
-    $scope.categories = [{"id" : "1", "name" : "野菜"}];
-    var List = $resource("/item/list");
+    $scope.elementTypes = [{"id" : "1", "name" : "ほのお"},
+                           {"id" : "2", "name" : "みず"},
+                           {"id" : "3", "name" : "くさ"}];
+    var Pokemon = $resource("/pokemon");
     var Store = $resource("/store");
 
-    $scope.changeCategory = function() {
-      $scope.items = List.query({id : $scope.entryForm.categoryid}, function(){
+    $scope.changeElementType = function() {
+      $scope.pokemons = Pokemon.query({id : $scope.entryForm.elementTypeId}, function(){
         console.log("success list");
+        console.log($scope.pokemons);
       }, function(){
         console.log("error list");
       });
+
     }
 
     $scope.submit = function($event) {

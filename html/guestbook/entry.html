@@ -1,11 +1,11 @@
 <div>
   <form name="form" ng-submit="submit()">
-    <select ng-model="entryForm.categoryId" ng-options="c.id as c.name for c in categories" ng-change="changeCategory()">
-      <option value="">-- chose category --</option>
+    <select ng-model="entryForm.categoryId" ng-options="c.id as c.name for c in elementTypes" ng-change="changeElementType()">
+      <option value="">-- chose element type --</option>
     </select>
     <br />
-    <select ng-model="entryForm.itemId" ng-options="i.id as i.name for i in items">
-      <option value="">-- chose item --</option>
+    <select ng-model="entryForm.pokemonId" ng-options="p.Id as p.Name for p in pokemons">
+      <option value="">-- chose pokemon --</option>
     </select>
     <br />
     <input type="text" ng-model="entryForm.name"></input>
