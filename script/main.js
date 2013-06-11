@@ -38,11 +38,11 @@
   }]);
 
   app.controller('GuestBookListController', ['$scope', '$resource', function($scope, $resource) {
-    var Store = $resource("/store");
-    $scope.stores = Store.query(function() {
-      console.log("success store query");
+    var Favorite = $resource("/favorite");
+    $scope.stores = Favorite.query(function() {
+      console.log("success favorite query");
     }, function(){
-      console.log("error store query");
+      console.log("error favorite query");
     });
   }]);
 
@@ -51,7 +51,7 @@
                            {"id" : "2", "name" : "ほのお"},
                            {"id" : "3", "name" : "みず"}];
     var Pokemon = $resource("/pokemon");
-    var Store = $resource("/store");
+    var Favorite = $resource("/favorite");
 
     $scope.changeElementType = function() {
       console.log($scope.entryForm.elementTypeId);
@@ -65,7 +65,13 @@
 
     $scope.submit = function($event) {
       console.log($scope.entryForm);
-      Store.save($scope.entryForm, function(){
+      var value = {
+        pokemonName : $scope.entryForm.pokemon.name,
+        nickname : $scope.entryForm.nickname,
+        email : $scope.entryForm.email
+      }
+      console.log(value);
+      Favorite.save(value, function(){
         console.log("success entry");
         $location.path('/#/guestbook/');
       }, function(){

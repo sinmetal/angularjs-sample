@@ -11,7 +11,7 @@ import (
 )
 
 type Favorite struct {
-	Id          string    `json:"id"`
+	Id          string    `json:"id" datastore:"-"`
 	PokemonName string    `json:"pokemonName"`
 	Nickname    string    `json:nickname`
 	Email       string    `json:email`
@@ -19,16 +19,17 @@ type Favorite struct {
 }
 
 func (f *Favorite) key(c appengine.Context) *datastore.Key {
-	return datastore.NewKey(c, "Favorite", fmt.Sprintf("%s-_-%s"), 0, nil)
+	return datastore.NewKey(c, "Favorite", fmt.Sprintf("%s-_-%s", f.Email, f.Nickname), 0, nil)
 }
 
-func (t *Favorite) save(c appengine.Context) (*Favorite, error) {
-	k, err := datastore.Put(c, t.key(c), t)
+func (f *Favorite) save(c appengine.Context) (*Favorite, error) {
+	f.Created = time.Now()
+	k, err := datastore.Put(c, f.key(c), f)
 	if err != nil {
 		return nil, err
 	}
-	t.Id = k.StringID()
-	return t, nil
+	f.Id = k.StringID()
+	return f, nil
 }
 
 func decodeFavorite(r io.ReadCloser) (*Favorite, error) {
@@ -75,6 +76,9 @@ func handleFavorites(c appengine.Context, r *http.Request) (interface{}, error) 
 			return nil, err
 		}
 		return favorite.save(c)
+	case "GET":
+		return getAllFavorites(c)
 	}
+
 	return nil, fmt.Errorf("method not implemented")
 }
