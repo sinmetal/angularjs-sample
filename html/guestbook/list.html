@@ -2,18 +2,20 @@
   <table class="table">
     <thead>
       <tr>
-        <td>No</td>
-        <td>CategoryId</td>
-        <td>ItemId</td>
-        <td>Name</td>
+        <th>No</th>
+        <th>Email</th>
+        <th>Pokemon</th>
+        <th>Nickname</th>
+        <th>Created</th>
       </tr>
     </thead>
-    <tbody ng-repeat="s in stores">
+    <tbody ng-repeat="f in favos">
       <tr>
-        <td>{{$index}}</td>
-        <td>{{s.CategoryId}}</td>
-        <td>{{s.ItemId}}</td>
-        <td>{{s.Name}}</td>
+        <td>{{$index + 1}}</td>
+        <td>{{f.email}}</td>
+        <td>{{f.pokemonName}}</td>
+        <td>{{f.nickname}}</td>
+        <td>{{f.created}}</td>
       </tr>
     </tbody>
   </table>

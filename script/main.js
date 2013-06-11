@@ -39,8 +39,9 @@
 
   app.controller('GuestBookListController', ['$scope', '$resource', function($scope, $resource) {
     var Favorite = $resource("/favorite");
-    $scope.stores = Favorite.query(function() {
+    $scope.favos = Favorite.query(function() {
       console.log("success favorite query");
+      console.log($scope.favos);
     }, function(){
       console.log("error favorite query");
     });

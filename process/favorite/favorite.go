@@ -13,8 +13,8 @@ import (
 type Favorite struct {
 	Id          string    `json:"id" datastore:"-"`
 	PokemonName string    `json:"pokemonName"`
-	Nickname    string    `json:nickname`
-	Email       string    `json:email`
+	Nickname    string    `json:"nickname"`
+	Email       string    `json:"email"`
 	Created     time.Time `json:"created"`
 }
 
@@ -40,15 +40,15 @@ func decodeFavorite(r io.ReadCloser) (*Favorite, error) {
 }
 
 func getAllFavorites(c appengine.Context) ([]Favorite, error) {
-	Favorites := []Favorite{}
-	ks, err := datastore.NewQuery("Favorite").Order("Created").GetAll(c, &Favorites)
+	favos := []Favorite{}
+	ks, err := datastore.NewQuery("Favorite").Order("Created").GetAll(c, &favos)
 	if err != nil {
 		return nil, err
 	}
-	for i := 0; i < len(Favorites); i++ {
-		Favorites[i].Id = ks[i].StringID()
+	for i := 0; i < len(favos); i++ {
+		favos[i].Id = ks[i].StringID()
 	}
-	return Favorites, nil
+	return favos, nil
 }
 
 func init() {
