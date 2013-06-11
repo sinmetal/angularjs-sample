@@ -2,26 +2,52 @@ package favorite
 
 import (
 	"appengine"
+	"appengine/datastore"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 )
 
-type Form struct {
-	Id int32 `json:"id"`
+type Favorite struct {
+	Id          string    `json:"id"`
+	PokemonName string    `json:"pokemonName"`
+	Nickname    string    `json:nickname`
+	Email       string    `json:email`
+	Created     time.Time `json:"created"`
 }
 
-type Pokemon struct {
-	Id int32
-	Name string
+func (f *Favorite) key(c appengine.Context) *datastore.Key {
+	return datastore.NewKey(c, "Favorite", fmt.Sprintf("%s-_-%s"), 0, nil)
 }
 
-func decodeForm(r io.ReadCloser) (*Form, error) {
+func (t *Favorite) save(c appengine.Context) (*Favorite, error) {
+	k, err := datastore.Put(c, t.key(c), t)
+	if err != nil {
+		return nil, err
+	}
+	t.Id = k.StringID()
+	return t, nil
+}
+
+func decodeFavorite(r io.ReadCloser) (*Favorite, error) {
 	defer r.Close()
-	var form Form
-	err := json.NewDecoder(r).Decode(&form)
-	return &form, err
+	var Favorite Favorite
+	err := json.NewDecoder(r).Decode(&Favorite)
+	return &Favorite, err
+}
+
+func getAllFavorites(c appengine.Context) ([]Favorite, error) {
+	Favorites := []Favorite{}
+	ks, err := datastore.NewQuery("Favorite").Order("Created").GetAll(c, &Favorites)
+	if err != nil {
+		return nil, err
+	}
+	for i := 0; i < len(Favorites); i++ {
+		Favorites[i].Id = ks[i].StringID()
+	}
+	return Favorites, nil
 }
 
 func init() {
@@ -30,36 +56,25 @@ func init() {
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
-	val, err := handlePokemons(r)
+	val, err := handleFavorites(c, r)
 	if err == nil {
 		err = json.NewEncoder(w).Encode(val)
 	}
 	if err != nil {
-		c.Errorf("pokemon error: %#v", err)
+		c.Errorf("favorite error: %#v", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 }
 
-func handlePokemons(r *http.Request) (interface{}, error) {
+func handleFavorites(c appengine.Context, r *http.Request) (interface{}, error) {
 	switch r.Method {
-	case "GET":
-		form, err := decodeForm(r.Body)
+	case "POST":
+		favorite, err := decodeFavorite(r.Body)
 		if err != nil {
 			return nil, err
 		}
-		return getPokemons(form)
+		return favorite.save(c)
 	}
 	return nil, fmt.Errorf("method not implemented")
-}
-
-
-func getPokemons(form *Form) ([3]Pokemon, error) {
-	pokemons := [3]Pokemon{}
-
-	charmander := Pokemon{Id: 1, Name: "フシギダネ"}
-	pokemons[0] = charmander
-	pokemons[1] = charmander
-	pokemons[2] = charmander
-	return pokemons, nil
 }
