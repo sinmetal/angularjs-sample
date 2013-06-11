@@ -5,11 +5,11 @@
       <option value="">-- chose element type --</option>
     </select>
     <br />
-    <select ng-model="entryForm.pokemonId" ng-options="p.id as p.name for p in pokemons">
+    <select ng-model="entryForm.pokemon" ng-options="p.name for p in pokemons">
       <option value="">-- chose pokemon --</option>
     </select>
     <br />
-    <input type="text" ng-model="entryForm.name"></input>
+    <input type="text" ng-model="entryForm.nickname"></input>
     <br />
     <input type="email" ng-model="entryForm.email"></input>
     <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Save</button>
