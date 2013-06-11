@@ -74,7 +74,7 @@
       console.log(value);
       Favorite.save(value, function(){
         console.log("success entry");
-        $location.path('/#/guestbook/');
+        $location.path(encodeURI('/guestbook/'));
       }, function(){
         console.log("error entry");
       });
