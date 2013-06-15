@@ -34,13 +34,11 @@
 
   setNaviTopDirective(app);
 
-  app.directive('highlighttab', ['$location', function(location) {
+  app.directive('activetab', ['$location', function(location) {
 
     return {
         restrict: 'C',
         link: function($scope, $element, $attrs) {
-            console.log($element.parent());
-
             var elementPath = $attrs.href.substring(1);
             $scope.$location = location;
             $scope.$watch('$location.path()', function(locationPath) {
