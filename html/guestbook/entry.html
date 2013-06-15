@@ -1,18 +1,39 @@
 <div>
   <h4>好きなポケモンをおしえて</h4>
-  <form name="form" ng-submit="submit()">
-    <select ng-model="entryForm.elementTypeId" ng-options="c.id as c.name for c in elementTypes" ng-change="changeElementType()">
-      <option value="">-- chose element type --</option>
-    </select>
-    <br />
-    <select ng-model="entryForm.pokemon" ng-options="p.name for p in pokemons">
-      <option value="">-- chose pokemon --</option>
-    </select>
-    <br />
-    <input type="text" ng-model="entryForm.nickname"></input>
-    <br />
-    <input type="email" ng-model="entryForm.email"></input>
-    <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Save</button>
-    <a href="#/guestbook/" class="btn">Cancel</a>
+  <form class="form-horizontal" name="form" ng-submit="submit()">
+    <div class="control-group">
+      <label class="control-label" for="inputEmail">タイプ</label>
+      <div class="controls">
+        <select ng-model="entryForm.elementTypeId" ng-options="c.id as c.name for c in elementTypes" ng-change="changeElementType()">
+          <option value="">-- chose element type --</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputEmail">ポケモン</label>
+      <div class="controls">
+        <select ng-model="entryForm.pokemon" ng-options="p.name for p in pokemons">
+          <option value="">-- chose pokemon --</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputEmail">ニックネーム</label>
+      <div class="controls">
+        <input type="text" ng-model="entryForm.nickname"></input>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputEmail">Email</label>
+      <div class="controls">
+        <input type="email" ng-model="entryForm.email"></input>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Save</button>
+        <a href="#/guestbook/" class="btn">Cancel</a>
+      </div>
+    </div>
   </form>
 </div>
