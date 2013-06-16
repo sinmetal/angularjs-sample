@@ -15,10 +15,11 @@
             var elementPath = $attrs.href.substring(1);
             $scope.$location = location;
             $scope.$watch('$location.path()', function(locationPath) {
-                if (elementPath === locationPath) {
-                    $element.parent().addClass("active");
+                var locationDirArray = locationPath.split('/');
+                if (elementPath === '/' + locationDirArray[1] + '/') {
+                    $element.parent().addClass('active');
                 } else {
-                    $element.parent().removeClass("active");
+                    $element.parent().removeClass('active');
                 }
             });
         }
