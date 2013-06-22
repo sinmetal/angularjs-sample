@@ -9,8 +9,9 @@
       <a class="brand" href="#">AngularJS Sample</a>
       <div class="nav-collapse collapse">
         <ul class="nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#guestbook">Guestbook</a></li>
+          <li ng-class="{active:currentPageController=='TopController'}"><a href="/#/">Home</a></li>
+          <li ng-class="{active:currentPageController=='GuestBookListController'}"><a href="/#/guestbook/">Guestbook</a></li>
+          currentPageController={{currentPageController}}
         </ul>
       </div><!--/.nav-collapse -->
     </div>
