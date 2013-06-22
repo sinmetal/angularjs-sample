@@ -17,8 +17,9 @@
             restrict: 'E',
             scope: false,
             controller: ['$scope', '$route', '$location', function ($scope, $route, $location) {
-                $scope.$on('$routeChangeSuccess', function() {
-                    $scope.currentPageController = $route.current.$$route.controller;
+                $scope.$on('$routeChangeSuccess', function () {
+                    var urlFlagments = $location.$$path.split("/");
+                    $scope.currentPage = urlFlagments[1];
                 });
             }]
         };
