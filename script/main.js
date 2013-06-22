@@ -7,24 +7,25 @@
                 when('/guestbook/entry', {controller: 'GuestBookEntryController', templateUrl: '/html/guestbook/entry.html'});
         });
 
-    app.directive('activetab', ['$location', function (location) {
 
+    app.directive('navitop', function () {
         return {
-            restrict: 'C',
-            link: function ($scope, $element, $attrs) {
-                var elementPath = $attrs.href.substring(1);
-                $scope.$location = location;
-                $scope.$watch('$location.path()', function (locationPath) {
-                    var locationDirArray = locationPath.split('/');
-                    if (elementPath === '/' + locationDirArray[1] + '/') {
-                        $element.parent().addClass('active');
-                    } else {
-                        $element.parent().removeClass('active');
-                    }
+            priority: 0,
+            templateUrl: '/html/common/topmenu.html',
+            replace: false,
+            transclude: false,
+            restrict: 'E',
+            scope: false,
+            controller: ['$scope', '$location', function ($scope, $location) {
+                // var urlFragments = $location.absUrl().split('/');
+                // var menuCategoryPathPosition = 1;
+                // $scope.current = urlFragments[menuCategoryPathPosition];
+                $scope.$on('$routeChangeStart', function (scope, next, current) {
+                    console.log('Changing from ' + angular.toJson(current) + ' to ' + angular.toJson(next));
                 });
-            }
+            }]
         };
-    }]);
+    });
 
     app.controller('TopController', ['$scope', '$resource', function ($scope, $resource) {
     }]);
