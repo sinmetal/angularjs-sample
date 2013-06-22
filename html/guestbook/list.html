@@ -1,22 +1,22 @@
 <div>
   <table class="table">
     <thead>
-      <tr>
-        <th>No</th>
-        <th>Email</th>
-        <th>Pokemon</th>
-        <th>Nickname</th>
-        <th>Created</th>
-      </tr>
+    <tr>
+      <th>No</th>
+      <th>Email</th>
+      <th>Pokemon</th>
+      <th>Nickname</th>
+      <th>Created</th>
+    </tr>
     </thead>
     <tbody ng-repeat="f in favos">
-      <tr>
-        <td>{{$index + 1}}</td>
-        <td>{{f.email}}</td>
-        <td>{{f.pokemonName}}</td>
-        <td>{{f.nickname}}</td>
-        <td>{{f.created}}</td>
-      </tr>
+    <tr>
+      <td>{{$index + 1}}</td>
+      <td>{{f.email}}</td>
+      <td>{{f.pokemonName}}</td>
+      <td>{{f.nickname}}</td>
+      <td>{{f.created}}</td>
+    </tr>
     </tbody>
   </table>
   <a href="#/guestbook/entry" class="btn btn-primary">Entry</a>
