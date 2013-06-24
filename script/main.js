@@ -1,6 +1,9 @@
 (function () {
     var app = angular.module('sample', ['ngResource']).
-        config(function ($routeProvider) {
+        config(function ($routeProvider, $locationProvider) {
+            $locationProvider.html5Mode(true);
+            $locationProvider.hashPrefix = '!';
+
             $routeProvider.
                 when('/', {controller: 'TopController', templateUrl: '/html/top/top.html'}).
                 when('/guestbook/', {controller: 'GuestBookListController', templateUrl: '/html/guestbook/list.html'}).
@@ -13,6 +16,13 @@
                 var path = $location.path().split('/')[1];
 
                 $el.toggleClass('active', path === $attrs.watchPath);
+                //console.log($el.find('a').attr('href'));
+                console.log($attrs);
+                var hoge = "^" + $el.find('a').attr('href') + ".*";
+                console.log(hoge);
+                console.log($location.path());
+                var reg = new RegExp(hoge);
+                console.log(reg.test($location.path()));
             });
         };
     }]);
