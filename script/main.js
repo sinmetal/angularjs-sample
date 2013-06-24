@@ -7,23 +7,15 @@
                 when('/guestbook/entry', {controller: 'GuestBookEntryController', templateUrl: '/html/guestbook/entry.html'});
         });
 
+    app.directive('watchPath', ['$location', function ($location) {
+        return function ($scope, $el, $attrs) {
+            $scope.$on('$routeChangeSuccess', function () {
+                var path = $location.path().split('/')[1];
 
-    app.directive('navitop', function () {
-        return {
-            priority: 0,
-            templateUrl: '/html/common/topmenu.html',
-            replace: false,
-            transclude: false,
-            restrict: 'E',
-            scope: false,
-            controller: ['$scope', '$route', '$location', function ($scope, $route, $location) {
-                $scope.$on('$routeChangeSuccess', function () {
-                    var urlFlagments = $location.$$path.split("/");
-                    $scope.currentPage = urlFlagments[1];
-                });
-            }]
+                $el.toggleClass('active', path === $attrs.watchPath);
+            });
         };
-    });
+    }]);
 
     app.controller('TopController', ['$scope', '$resource', function ($scope, $resource) {
     }]);
