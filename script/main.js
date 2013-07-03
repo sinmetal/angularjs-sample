@@ -11,7 +11,6 @@
         return function ($scope, $el, $attrs) {
             $scope.$on('$routeChangeSuccess', function () {
                 var path = $location.path().split('/')[1];
-
                 $el.toggleClass('active', path === $attrs.watchPath);
             });
         };
