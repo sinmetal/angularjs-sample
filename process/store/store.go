@@ -9,17 +9,13 @@ import (
 	"net/http"
 )
 
-func init() {
-	http.HandleFunc("/store", handler)
-}
-
 type Store struct {
 	CategoryId int `json:",string"`
 	ItemId     int `json:",string"`
 	Name       string
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func Process(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "POST":
 		post(w, r)

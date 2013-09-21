@@ -4,21 +4,17 @@ import (
 	"appengine"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
-	"log"
 )
 
 type Pokemon struct {
-	Id int64 `json:"id"`
+	Id   int64  `json:"id"`
 	Name string `json:"name"`
 }
 
-func init() {
-	http.HandleFunc("/pokemon", handler)
-}
-
-func handler(w http.ResponseWriter, r *http.Request) {
+func Process(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	val, err := handlePokemons(r)
 	if err == nil {
@@ -42,7 +38,6 @@ func handlePokemons(r *http.Request) (interface{}, error) {
 	return nil, fmt.Errorf("method not implemented")
 }
 
-
 func getPokemons(id int64) ([3]Pokemon, error) {
 	pokemons := [3]Pokemon{}
 
@@ -59,6 +54,6 @@ func getPokemons(id int64) ([3]Pokemon, error) {
 		pokemons[1] = Pokemon{Id: 158, Name: "ワニノコ"}
 		pokemons[2] = Pokemon{Id: 393, Name: "ポッチャマ"}
 	}
-	
+
 	return pokemons, nil
 }
