@@ -18,9 +18,9 @@ type Store struct {
 func Process(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "POST":
-		post(w, r)
+		doPost(w, r)
 	case "GET":
-		get(w, r)
+		doGet(w, r)
 	default:
 		w.WriteHeader(http.StatusNotFound)
 		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
@@ -28,7 +28,7 @@ func Process(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func post(w http.ResponseWriter, r *http.Request) {
+func doPost(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 
 	body, _ := ioutil.ReadAll(r.Body)
@@ -51,7 +51,7 @@ func post(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "OK")
 }
 
-func get(w http.ResponseWriter, r *http.Request) {
+func doGet(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 
 	var stores []*Store

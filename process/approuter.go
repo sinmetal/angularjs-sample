@@ -24,11 +24,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "not found.", http.StatusNotFound)
 	case "/item":
 		item.Process(w, r)
-	case "favorite":
+	case "/favorite":
 		favorite.Process(w, r)
-	case "pokemon":
+	case "/pokemon":
 		pokemon.Process(w, r)
-	case "store":
+	case "/store":
 		store.Process(w, r)
 	}
 }

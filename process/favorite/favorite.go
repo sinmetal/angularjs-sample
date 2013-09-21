@@ -20,7 +20,7 @@ type Favorite struct {
 
 func Process(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
-	val, err := handleFavorites(c, r)
+	val, err := handler(c, r)
 	if err == nil {
 		err = json.NewEncoder(w).Encode(val)
 	}
@@ -31,7 +31,7 @@ func Process(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func handleFavorites(c appengine.Context, r *http.Request) (interface{}, error) {
+func handler(c appengine.Context, r *http.Request) (interface{}, error) {
 	switch r.Method {
 	case "POST":
 		favorite, err := decodeFavorite(r.Body)

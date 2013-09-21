@@ -16,7 +16,7 @@ type Pokemon struct {
 
 func Process(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
-	val, err := handlePokemons(r)
+	val, err := handler(r)
 	if err == nil {
 		log.Printf("val=%s", val)
 		err = json.NewEncoder(w).Encode(val)
@@ -28,7 +28,7 @@ func Process(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func handlePokemons(r *http.Request) (interface{}, error) {
+func handler(r *http.Request) (interface{}, error) {
 	switch r.Method {
 	case "GET":
 		id, _ := strconv.ParseInt(r.FormValue("id"), 10, 64)
