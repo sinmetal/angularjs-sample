@@ -45,13 +45,13 @@ func handler(c appengine.Context, r *http.Request) (interface{}, error) {
 	return nil, fmt.Errorf("method not implemented")
 }
 
-func (f *Favorite) key(c appengine.Context) *datastore.Key {
+func (f *Favorite) Key(c appengine.Context) *datastore.Key {
 	return datastore.NewKey(c, "Favorite", fmt.Sprintf("%s-_-%s", f.Email, f.Nickname), 0, nil)
 }
 
 func (f *Favorite) save(c appengine.Context) (*Favorite, error) {
 	f.Created = time.Now()
-	k, err := datastore.Put(c, f.key(c), f)
+	k, err := datastore.Put(c, f.Key(c), f)
 	if err != nil {
 		return nil, err
 	}
