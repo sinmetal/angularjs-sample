@@ -18,8 +18,7 @@ type Favorite struct {
 	Created     time.Time `json:"created"`
 }
 
-func Process(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
+func Process(w http.ResponseWriter, r *http.Request, c appengine.Context) {
 	val, err := handler(c, r)
 	if err == nil {
 		err = json.NewEncoder(w).Encode(val)

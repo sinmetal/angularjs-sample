@@ -25,7 +25,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	case "/item":
 		item.Process(w, r)
 	case "/favorite":
-		favorite.Process(w, r)
+		favorite.Process(w, r, c)
 	case "/pokemon":
 		pokemon.Process(w, r)
 	case "/store":
